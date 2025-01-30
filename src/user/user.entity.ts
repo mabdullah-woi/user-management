@@ -1,10 +1,10 @@
-import { RefreshToken } from 'src/refresh-token/refresh-token.entity';
+import { RefreshToken } from 'src/token/refresh-token.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { USER_TYPE } from './enums/user-type.enum';
 
 @Entity({ name: 'user' })
 export class User {
-  @Column({ name: 'id', primary: true, type: 'uuid' })
+  @Column({ name: 'id', type: 'uuid', primary: true })
   id: string;
 
   @Column({ name: 'first_name', type: 'varchar', nullable: false })
@@ -25,9 +25,7 @@ export class User {
   @Column({ name: 'auth_source', type: 'simple-array' })
   authSource: string[];
 
-  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user, {
-    cascade: true,
-  })
+  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user)
   refreshTokens: RefreshToken[];
 
   @Column({ name: 'created_at', type: 'timestamptz' })
